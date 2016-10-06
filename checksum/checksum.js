@@ -1,7 +1,7 @@
 "use strict";
 
 var crypt = require('./crypt');
-var config = require('./pg').paytmnew;
+var config = require('./pg');
 var util = require('util');
 var crypto = require('crypto');
 
@@ -92,10 +92,10 @@ module.exports.verifychecksum = verifychecksum;
       WEBSITE: 'PaytmMktPlace',
       CHECKSUMHASH: '5xORNy+qP7G53XWptN7dh1AzD226cTTDsUe4yjAgKe19eO5olCPseqhFDmlmUTcSiEJFXuP/usVEjHlfMCgvqtI8rbkoUCVC3uKZzOBFpOw='
     };
-    genchecksum(ver_param, config.mid_key_map[ver_param.MID], function (err, res) {
+    genchecksum(ver_param, config.MID, function (err, res) {
       console.log(res);
     });
-    if (verifychecksum(ver_param, config.mid_key_map[ver_param.MID])) {
+    if (verifychecksum(ver_param, config.MID)) {
       console.log('verified checksum');
     } else {
       console.log("verification failed");
