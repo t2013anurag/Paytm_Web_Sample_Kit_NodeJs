@@ -4,3 +4,9 @@
  3. The *checksum/pg.js* file contains values for various parameters which need to be configured according to the values received by each merchant.
 
    [link1]: http://paywithpaytm.com/developer/paytm_api_doc/
+
+
+
+# For Offline(Wallet Api) Checksum Utility below are the methods:
+  1. genchecksumbystring : For generating the checksum
+  2. verifychecksumbystring : For verifing the checksum
