@@ -43,7 +43,18 @@ function genchecksum(params, key, cb) {
     cb(undefined, params);
   });
 }
+function genchecksumbystring(params, key, cb) {
 
+  crypt.gen_salt(4, function (err, salt) {
+    var sha256 = crypto.createHash('sha256').update(params + '|' + salt).digest('hex');
+    var check_sum = sha256 + salt;
+    var encrypted = crypt.encrypt(check_sum, key);
+
+     var CHECKSUMHASH = encodeURIComponent(encrypted);
+     CHECKSUMHASH = encrypted;
+    cb(undefined, CHECKSUMHASH);
+  });
+}
 
 function verifychecksum(params, key) {
 
@@ -71,10 +82,24 @@ function verifychecksum(params, key) {
     return false;
   }
 }
+function verifychecksumbystring(params, key,checksumhash) {
+
+    var checksum = crypt.decrypt(checksumhash, key);
+    var salt = checksum.substr(checksum.length - 4);
+    var sha256 = checksum.substr(0, checksum.length - 4);
+    var hash = crypto.createHash('sha256').update(params + '|' + salt).digest('hex');
+    if (hash === sha256) {
+      return true;
+    } else {
+      util.log("checksum is wrong");
+      return false;
+    }
+  } 
 
 module.exports.genchecksum = genchecksum;
 module.exports.verifychecksum = verifychecksum;
-
+module.exports.verifychecksumbystring = verifychecksumbystring;
+module.exports.genchecksumbystring = genchecksumbystring;
 
 /* ---------------- TEST CODE ---------------- */
 
