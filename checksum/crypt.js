@@ -47,6 +47,7 @@ var crypt = {
       break;
     }
     var decipher = crypto.createDecipheriv('AES-' + algo + '-CBC', key, iv);
+    decipher.setAutoPadding(false);
     var decrypted = decipher.update(data, 'base64', 'binary');
     try {
       decrypted += decipher.final('binary');
